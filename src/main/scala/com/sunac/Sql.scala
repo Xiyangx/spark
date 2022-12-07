@@ -2,6 +2,7 @@ package com.sunac
 
 object Sql {
 
+  var sql = "SELECT bukrs,gjahr,monat,stat_hour from sunac.ads_fd_sap_pbc_fixed_assets_hf limit 10"
   var sql1 = "show databases"
   var dropT1 = "DROP TABLE IF EXISTS sunac.t_mid_dwd_fd_sap_hs_bkpf"
   var dropT2 = "DROP TABLE IF EXISTS sunac.t_mid_dwd_fd_sap_hs_journal"
@@ -303,4 +304,72 @@ object Sql {
       |AND t1.gjahr = t14.gjahr
       |where t1.stat_date= 20220615
       |""".stripMargin
+
+  var readEs : String =
+    """select
+      | `bkpfxref2hd`   --string COMMENT '融创凭证号',
+      | ,`bkpfzyzid`   --string COMMENT '预制凭证号',
+      | ,`bkpfbktxt`   --string COMMENT '凭证抬头文本',
+      | ,`bsegbelnr`   --string COMMENT '会计凭证号码',
+      | ,`bkpfnumpg`   --string COMMENT '附件张数',
+      | ,`bkpfkursf`   --string COMMENT '汇率',
+      | ,`bsegbuzei`   --string COMMENT '行项目数',
+      | ,`bsegbukrs`   --string COMMENT '公司代码',
+      | ,`bseggjahr`   --string COMMENT '财年',
+      | ,`bsegh2monat`   --string COMMENT '会计期间',
+      | ,to_date(from_unixtime(UNIX_TIMESTAMP(bsegh2bldat,'yyyyMMdd')))  as bsegh2bldat --Timestamp COMMENT '业务日期',
+      | ,to_date(from_unixtime(UNIX_TIMESTAMP(bsegh2budat,'yyyyMMdd'))) as bsegh2budat--Timestamp COMMENT '记帐日期',
+      | ,`bsegh2bblart`   --string COMMENT '凭证类型',
+      | ,`bsegsgtxt`   --string COMMENT '摘要',
+      | ,`bseghkont`   --string COMMENT '总分类帐帐目',
+      | ,`ska1txt50`   --string COMMENT '总账科目长文本',
+      | ,`bsegbschl`   --string COMMENT '记帐代码',
+      | ,`bsegh2hwaer`   --string COMMENT '本币',
+      | ,cast(`bsegs2wrbtr` as decimal(20,2))  --double COMMENT '借方金额',
+      | ,`bsegh2wrbtr`   --double COMMENT '贷方金额',
+      | ,`bseggsber`   --string COMMENT '业务类型',
+      | ,`bsegshkzg`   --string COMMENT '借方/贷方标识',
+      | ,`bsegdmbtr`   --double COMMENT '本位币金额',
+      | ,`bsegkostl`   --string COMMENT '成本中心',
+      | ,`bsegprctr`   --string COMMENT '利润中心',
+      | ,`bsegzzrstgr`   --string COMMENT '现金流量码',
+      | ,`bseghktid`   --string COMMENT '银行标识',
+      | ,`bseghbkid`   --string COMMENT '开户银行',
+      | ,`bsegkunnr`   --string COMMENT '客户编号',
+      | ,`bseglifnr`   --string COMMENT '供应商或债权人的帐号',
+      | ,`bseganln1`   --string COMMENT '主资产号',
+      | ,`bseganbwa`   --string COMMENT '资产业务类型',
+      | ,`bsegzzxiangmu`   --
+      | ,`bsegzzheto`   --
+      | ,`bsegmwskz`   --
+      | ,`bsegzzbeiyong1`   --
+      | ,`bsegzzbeiyong2`   --
+      | ,`bsegzfbdt`   --
+      | ,`bsegzzmenge`
+      | ,`bsegmeins`   --
+      | ,`bsegxnegp`
+      | ,`bsegzzhktid`
+      | ,`bsegbxdnr`
+      | ,`bkpftcode`   --
+      | ,`bsegzzlfinr`
+      | ,`bsegzzshulz`   --
+      | ,`bsegzzkunnr`   --
+      | ,`bsegzzltext`   --
+      | ,`bsegzzwyfwlx`
+      | ,`bsegzzskxz`
+      | ,`bsegzzcollc`
+      | ,`bkpfxreversal`
+      | ,`bkpftjusr`
+      | ,`bkpftjdate`
+      | ,`bkpftjtime`
+      | ,`bkpfgzusr`
+      | ,`bkpfgzrdt`
+      | ,`bkpfgztim`
+      | ,`csksktext`
+      | ,`cepcktext`   --
+      | ,`ztfi0258rstgt`
+      | ,`kna1name1`
+      | ,`lfa1name1`   --
+      | from sunac.ads_fd_sap_hs_journal_di
+      | where stat_date = 20220622""".stripMargin
 }
